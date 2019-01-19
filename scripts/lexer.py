@@ -43,8 +43,8 @@ class Lexer:
         'then': 'THEN_KW',
         'else': 'ELSE_KW',
         'CONST': 'CONST_KW',
-        'true': 'TRUE_KW',
-        'false': 'FALSE_KW',
+        'true': 'TRUE',
+        'false': 'FALSE',
     }
 
     tokens = [
@@ -132,11 +132,12 @@ class Lexer:
 
     def t_NUMBER(self, t):
         r'\d +'
+        t.value = int(t.value)
         return t
 
     def t_LETTER(self, t):
         r'[a-zA-Z_][a-zA-Z_0-9]*'
-        t.type = self.reserved.get(t.value, 'LETTER')  # Check for reserved words
+        t.type = self.reserved.get(t.value, 'LETTER')
         return t
 
     def t_error(self, t):
@@ -156,14 +157,9 @@ if __name__ == '__main__':
     f = codecs.open('./../test.code', encoding='utf-8')
     lexer.input(f.read())
     f.close()
-    # Tokenize
+    print("type \t\t\t\t\t value \t\t\t\t\t line \t\t\t\t\t lexpos ")
     while True:
         tok = lexer.token()
         if not tok:
-            break  # No more input
-        parsIndex = '-'
-        i = -1
-        if tok.type == 'ID':
-            i = Lexer.sTable.index(tok.value)
-        parsIndex = {'-1': '-'}.get(str(i), str(i))
-        print(tok.value + "\t\t\t\t\t" + tok.type + "\t\t\t\t\t" + str(parsIndex))
+            break
+        print(str(tok.type) + "\t\t\t\t\t" + str(tok.value) + "\t\t\t\t\t" + str(tok.lineno) + "\t\t\t\t\t" + str(tok.lexpos))
