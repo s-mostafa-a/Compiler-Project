@@ -143,6 +143,10 @@ class Lexer:
         print("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
 
+    def t_newline(self, t):
+        r'\r?\n+'
+        t.lexer.lineno += t.value.count("\n")
+
     def build(self, **kwargs):
         self.lexer = lex.lex(module=self, **kwargs)
         return self.lexer
@@ -162,4 +166,4 @@ if __name__ == '__main__':
         if tok.type == 'ID':
             i = Lexer.sTable.index(tok.value)
         parsIndex = {'-1': '-'}.get(str(i), str(i))
-        print(tok.value + "\t" + tok.type + "\t" + str(parsIndex))
+        print(tok.value + "\t\t\t\t\t" + tok.type + "\t\t\t\t\t" + str(parsIndex))
