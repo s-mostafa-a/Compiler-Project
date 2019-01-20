@@ -14,18 +14,16 @@ class Yacc:
     #     | numOrLetter
     #     | """
 
-    def p_numOrLetter_to_Num(self, p):
-        """numOrLetter : NUMBER"""
-
-    def p_numOrLetter_to_Letter(self, p):
-        """numOrLetter : LETTER"""
-
-    def p_numOrLetter_to_Epsilon(self, p):
-        """numOrLetter : """
+    def p_numOrLetter(self, p):
+        """numOrLetter : NUMBER
+        | LETTER
+        |
+        """
 
     def p_list(self, p):
         """list : list declaration
         | declaration"""
+
 
     def p_declaration(self, p):
         """declaration : function
