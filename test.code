@@ -8,6 +8,8 @@ firstFunc()
     //secondNum will be 51
     Giveback secondNum
 }
+
+
 void secondFunc(bool B ; int A )
 {
     int firstArray [5] ;

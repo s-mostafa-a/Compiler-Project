@@ -8,12 +8,6 @@ class Yacc:
     def p_program(self, p):
         """program : list"""
 
-    # def p_numOR_LOPLetter(self, p):
-    #     """numOrLetter : NUMBER
-    #     | LETTER
-    #     | numOrLetter
-    #     | """
-
     def p_numOrLetter(self, p):
         """numOrLetter : NUMBER
         | LETTER
@@ -24,19 +18,23 @@ class Yacc:
         """list : list declaration
         | declaration"""
 
-
     def p_declaration(self, p):
-        """declaration : function
-        | varDeclaration"""
-
-    def p_varDeclaration(self, p):
-        """varDeclaration : type  variableList SEMICOLON"""
+        """declaration : VOID_KW LETTER OPENING_PARENTHESES parameter CLOSING_PARENTHESES OPENING_BRACE localDeclarations statementList CLOSING_BRACE
+        | VOID_KW LETTER OPENING_PARENTHESES parameter CLOSING_PARENTHESES statementWithoutBracket
+        | type LETTER OPENING_PARENTHESES parameter CLOSING_PARENTHESES OPENING_BRACE localDeclarations statementList CLOSING_BRACE
+        | type LETTER OPENING_PARENTHESES parameter CLOSING_PARENTHESES statementWithoutBracket
+        | scopedSpecifier LETTER varInitialization SEMICOLON
+        | scopedSpecifier LETTER varInitialization COMA variableList SEMICOLON"""
+        #| STATIC_KW type LETTER varInitialization SEMICOLON
+        #| STATIC_KW type LETTER varInitialization COMA variableList SEMICOLON
+        #| type LETTER varInitialization SEMICOLON
+        #| type LETTER varInitialization COMA variableList SEMICOLON """
 
     def p_ScopedVariableDec(self, p):
         """ScopedVariableDec : scopedSpecifier variableList SEMICOLON"""
 
     def p_variableList(self, p):
-        """variableList : variableList COMA varInitialization
+        """variableList : variableList COMA variableList
         | varInitialization"""
 
     def p_varInitialization(self, p):
@@ -46,7 +44,7 @@ class Yacc:
     def p_varForm(self, p):
         """varForm : LETTER numOrLetter OPENING_BRACKET NUMBER CLOSING_BRACKET
         | LETTER  numOrLetter """
-
+        # inja fahmidam id_uc yani LETTER  numOrLetter
     def p_scopedSpecifier(self, p):
         """scopedSpecifier : STATIC_KW type
         | type"""
@@ -152,7 +150,7 @@ class Yacc:
 
     def p_compareType(self, p):
         """compareType : equal
-        | nonEQ_OP"""
+        | nonEqual"""
 
     def p_equal(self, p):
         """equal : LE_REL
@@ -160,7 +158,7 @@ class Yacc:
         | EQ_REL"""
 
     def p_nonEQ_OP(self, p):
-        """nonEQ_OP : GT_REL
+        """nonEqual : GT_REL
         | LT_REL
         | NEQ_REL"""
 
