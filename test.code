@@ -1,6 +1,4 @@
-int a;
-firstFunc()
-{
+int firstFunc(){
     int firstNum ;
     int secondNum ;
     firstNum= 5 * 10 ;
