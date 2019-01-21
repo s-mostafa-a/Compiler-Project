@@ -89,7 +89,7 @@ class Yacc:
 
     def p_varForm(self, p):
         """varForm : LETTER OPENING_BRACKET NUMBER CLOSING_BRACKET
-        | numOrLetter """
+        | LETTER """
         print("8")
 
     def p_scopedSpecifier(self, p):
@@ -299,7 +299,7 @@ class Yacc:
 
 
     def p_alterable(self, p):
-        """alterable : numOrLetter
+        """alterable : LETTER
         | alterable OPENING_BRACKET allExpression CLOSING_BRACKET
         | alterable LETTER"""
         print("39")
