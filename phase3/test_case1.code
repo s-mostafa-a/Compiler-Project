@@ -1,0 +1,3 @@
+int x,y,z; 
+int r:(x - z * -y + -z); 
+bool w:( r > z and y != x );
