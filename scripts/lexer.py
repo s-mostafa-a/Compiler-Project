@@ -3,131 +3,123 @@ import codecs
 import ply.lex as lex
 
 
-reserved = {
-    'boolean': 'BOOLEAN_KW',
-    'character': 'CHARACTER_KW',
-    'integer': 'INTEGER_KW',
-    'char': 'CHAR_KW',
-    'bool': 'BOOL_KW',
-    'int': 'INT_KW',
-    'void': 'VOID_KW',
-    'static': 'STATIC_KW',
-    'if': 'IF_KW',
-    'other': 'OTHER_KW',
-    'till': 'TILL_KW',
-    'comeback': 'COMEBACK_KW',
-    'giveback': 'GIVEBACK_KW',
-    'continue': 'CONTINUE_KW',
-    'then': 'THEN_KW',
-    'else': 'ELSE_KW',
-    'CONST': 'CONST_KW',
-    'true': 'TRUE',
-    'false': 'FALSE',
-}
+sTable = []
 
-tokens = [
-    'NUMBER',
-    'LETTER',
-    'COMMENT',
+tokens = ['Const_KW', 'reserved', 'Num', 'Letter', 'idLetter','idNum', 'Opening_Bracket', 'Closing_Bracket', 'Semicolon', 'Boolean_KW',
+          'Character_KW', 'Integer_KW', 'char_KW', 'bool_KW', 'int_KW', 'void_KW', 'If_KW', 'Other_KW', 'Till_KW',
+          'ComeBack_KW', 'GiveBack_KW', 'Continue_KW', 'PP', 'MM', 'Opening_Parentheses', 'Static_KW',
+          'Closing_Parentheses', 'Opening_Brace', 'Closing_Brace', 'Equal', 'PlusEqual',
+          'MinusEqual', 'TimesEqual', 'DivideEqual', 'Then_KW', 'Else_KW', 'LEqual', 'GEqual',
+          'EEqual', 'GreaterOP', 'LessOP', 'NonEqualOP', 'Plus', 'Minus', 'Times',
+          'Divide', 'ModeOP', 'QMark', 'True_KW', 'False_KW', 'DoubleAnd', 'DoubleOr',
+          'Tilda', 'And_KW', 'Or_KW', 'Comment', 'Comma', 'Colon', 'Dot']
 
-
-    'COLON',    #
-    'COMA',     #
-    'SEMICOLON',    #
-    'OPENING_BRACKET',  #
-    'CLOSING_BRACKET',  #
-    'OPENING_PARENTHESES',  #
-    'CLOSING_PARENTHESES',  #
-    'OPENING_BRACE',  #
-    'CLOSING_BRACE',  #
-
-
-    'PL_OP',    # +
-    'MI_OP',    # -
-    'MU_OP',    # *
-    'DI_OP',    # /
-    'PE_OP',    # %
-    'EQ_OP',    # =
-    'PLE_OP',   # +=
-    'MIE_OP',   # -=
-    'MUE_OP',   # *=
-    'DIE_OP',   # /=
-    'PP_OP',    # ++
-    'MM_OP',    # --
-    'QU_UOP',   # ?
-    'AA_LOP',   # &&
-    'OO_LOP',   # ||
-    'TIL_LOP',  # ~
-    'AND_LOP',  # AND
-    'OR_LOP',   # OR
-
-
-    'GT_REL',   # >
-    'LT_REL',   # <
-    'EQ_REL',   # ==
-    'NEQ_REL',  # !=
-    'LE_REL',   # <=
-    'GE_REL'    # >=
-] + list(reserved.values())
 
 t_ignore = ' \t'
+t_Colon = '\:'
+t_Comma = r'\,'
+t_Opening_Bracket = r'\['
+t_Closing_Bracket = r']'
+t_Semicolon = r';'
+t_PP = r'\+\+'
+t_MM = r'--'
+t_Opening_Parentheses = r'\('
+t_Closing_Parentheses = r'\)'
+t_Opening_Brace = r'\{'
+t_Closing_Brace = r'}'
+t_Equal = r'='
+t_PlusEqual = r'\+='
+t_MinusEqual = r'-='
+t_TimesEqual = r'\*='
+t_DivideEqual = r'/='
+t_LEqual = r'<='
+t_GEqual = r'>='
+t_EEqual = r'=='
+t_GreaterOP = r'>'
+t_LessOP = r'<'
+t_NonEqualOP = r'!='
+t_Plus = r'\+'
+t_Minus = r'-'
+t_Times = r'\*'
+t_Divide = r'/'
+t_ModeOP = r'%'
+t_QMark = r'\?'
+t_DoubleAnd = r'\&\&'
+t_DoubleOr = r'\|\|'
+t_Tilda = r'\~'
 
-t_COMA = r','
-t_COLON = r':'
-t_SEMICOLON = r';'
-t_OPENING_BRACKET = r'\['
-t_CLOSING_BRACKET = r'\]'
-t_OPENING_PARENTHESES = r'\('
-t_CLOSING_PARENTHESES = r'\)'
-t_OPENING_BRACE = r'\{'
-t_CLOSING_BRACE = r'\}'
+t_Dot = r'\.'
 
-t_PL_OP = r'\+'
-t_MI_OP = r'-'
-t_MU_OP = r'\*'
-t_DI_OP = r'\/'
-t_PE_OP = r'%'
-t_EQ_OP = r'='
-t_PLE_OP = r'\+='
-t_MIE_OP = r'-='
-t_MUE_OP = r'\*='
-t_DIE_OP = r'\/='
-t_PP_OP = r'\+\+'
-t_MM_OP = r'--'
-t_QU_UOP = r'\?'
-t_AA_LOP = r'\&\&'
-t_OO_LOP = r'\|\|'
-t_TIL_LOP = r'\~'
-t_AND_LOP = r'AND'
-t_OR_LOP = r'OR'
+reserved = {
+    'boolean': 'Boolean_KW',
+    'character': 'Character_KW',
+    'integer': 'Integer_KW',
+    'char': 'char_KW',
+    'bool': 'bool_KW',
+    'int': 'int_KW',
+    'void': 'void_KW',
+    'if': 'If_KW',
+    'other': 'Other_KW',
+    'till': 'Till_KW',
+    'comeBack': 'ComeBack_KW',
+    'giveBack': 'GiveBack_KW',
+    'continue': 'Continue_KW',
+    'static': 'Static_KW',
+    'then': 'Then_KW',
+    'else': 'Else_KW',
+    'CONST': 'Const_KW',
+    'true': 'True_KW',
+    'false': 'False_KW',
+    'and' : 'And_KW',
+    'or' : 'Or_KW'
+}
 
-t_GT_REL = r'>'
-t_LT_REL = r'<'
-t_EQ_REL = r'=='
-t_NEQ_REL = r'!='
-t_LE_REL = r'<='
-t_GE_REL = r'>='
 
-def t_COMMENT(t):
-    r'\/\/.*'
+
+def t_idNum(t):
+    r'[0-9]+[a-zA-Z]+[a-zA-Z_0-9]*'
+    if t.value in reserved:
+        t.type = reserved.get(t.value, 'IDENTSYM')
     return t
 
-def t_NUMBER(t):
-    r'\d +'
+def t_Num(t):
+    r'[0-9]+'
     t.value = int(t.value)
     return t
 
-def t_LETTER(t):
+def t_idLetter(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value, 'LETTER')
+    t.type = reserved.get(t.value, 'idLetter')  # Check for reserved words
+    #
+    if t.value not in reserved:
+        t.type = reserved.get(t.value,'idLetter')
     return t
 
+
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    print("Invalid character: ", t.value[0])
     t.lexer.skip(1)
 
-def t_newline(t):
+def t_COMMENT(t):
+    r'(//.*)|%%%.*[\r\n]*.*%%%'
+    pass
+
+def t_newline( t):
     r'\r?\n+'
     t.lexer.lineno += t.value.count("\n")
 
+
+# void func(){comeback;}
+
+
+
 lexer = lex.lex()
+f = codecs.open('./../test.code', encoding='utf-8')
+lexer.input(f.read())
+f.close()
+print("type \t\t\t\t\t value \t\t\t\t\t line \t\t\t\t\t lexpos ")
+while True:
+    tok = lexer.token()
+    if not tok:
+        break
+    print(str(tok.type) + "\t\t\t\t\t" + str(tok.value) + "\t\t\t\t\t" + str(tok.lineno) + "\t\t\t\t\t" + str(tok.lexpos))

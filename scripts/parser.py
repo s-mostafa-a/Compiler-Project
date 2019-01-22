@@ -1,363 +1,520 @@
 from ply import yacc
 from scripts import lexer
+from ply.yacc import yaccdebug
 
 
 class Yacc:
     tokens = lexer.tokens
 
     precedence = (
-        ('nonassoc', 'OPENING_PARENTHESES'),  # Nonassociative operators
-        ('nonassoc', 'OTHER_KW'),  # Nonassociative operators
-        ('left', 'THEN_KW'),
-        ('left', 'ELSE_KW'),
-        #('left', 'logicOp'),
-        # AA_LOP
-        # | OO_LOP
-        # | TIL_LOP
-        # | AND_LOP
-        # | OR_LOP
-        ('left', 'AA_LOP', 'OO_LOP', 'TIL_LOP', 'AND_LOP', 'OR_LOP'),
-        # ('left', 'mathOp'),
-        # """mathOp : EQ_OP
-        # | PLE_OP
-        # | MIE_OP
-        # | MUE_OP
-        # | DIE_OP"""
-        ('left', 'EQ_OP', 'PLE_OP', 'MIE_OP', 'MUE_OP', 'DIE_OP'),
-
-
-        # ('left', 'op'),
-        # """op : PL_OP
-        # | MI_OP
-        # | MU_OP
-        # | DI_OP
-        # | PE_OP"""
-        ('left', 'PL_OP', 'MI_OP', 'MU_OP', 'DI_OP', 'PE_OP'),
-
-        # ('left', 'unaryop'),
-        # """unaryop : MI_OP
-        # | MU_OP
-        # | QU_UOP"""
-        ('left', 'MI_OP', 'MU_OP', 'QU_UOP'),
-
+        ('nonassoc', 'Opening_Parentheses'),  # Nonassociative operators
+        ('nonassoc', 'Other_KW'),  # Nonassociative operators
+        ('left', 'Then_KW'),
+        ('left', 'Else_KW'),
+        ('left', 'DoubleAnd', 'DoubleOr', 'Tilda', 'And_KW', 'Or_KW'),
+        ('left', 'Equal', 'PlusEqual', 'MinusEqual', 'TimesEqual', 'DivideEqual'),
+        ('left', 'Plus', 'Minus', 'Times', 'Divide', 'ModeOP'),
+        ('left', 'Minus', 'Times', 'QMark'),
     )
+
 
     def p_program(self, p):
         """program : list"""
-        print("1")
+        print("program : list")
 
-    def p_numOrLetter(self, p):
-        """numOrLetter : NUMBER
-        | LETTER
-        |
-        """
-        print("2")
+    def p_numOrLetter_num(self, p):
+        """numOrLetter : Num"""
+        print("numOrLetter : Num")
+    def p_numOrLetter_idLetter(self, p):
+        """numOrLetter : idLetter"""
+        print("numOrLetter : idLetter")
 
     def p_list(self, p):
         """list : list declaration
         | declaration"""
-        print("3")
+        if len(p)==3:
+            print("list : list declaration")
+        else:
+            print("list : declaration ")
 
-    def p_declaration(self, p):
-        """declaration : VOID_KW LETTER OPENING_PARENTHESES parameter CLOSING_PARENTHESES OPENING_BRACE localDeclarations statementList CLOSING_BRACE
-        | VOID_KW LETTER OPENING_PARENTHESES parameter CLOSING_PARENTHESES statementWithoutBracket
-        | type LETTER OPENING_PARENTHESES parameter CLOSING_PARENTHESES OPENING_BRACE localDeclarations statementList CLOSING_BRACE
-        | type LETTER OPENING_PARENTHESES parameter CLOSING_PARENTHESES statementWithoutBracket
-        | type LETTER varInitialization SEMICOLON
-        | type LETTER varInitialization COMA variableList SEMICOLON"""
-        print("4")
-        #for i in p:
-        #    print(i)
+    def p_declaration_idNum(self, p):
+        """declaration : void_KW idNum Opening_Parentheses parameter Closing_Parentheses Opening_Brace statement Closing_Brace
+                    | type idNum Opening_Parentheses parameter Closing_Parentheses statement
+                    """
+        if len(p)==7:
+            print("declaration : type idNum Opening_Parentheses parameter Closing_Parentheses statement")
+        else:
+            print("declaration : void_KW idNum Opening_Parentheses parameter Closing_Parentheses Opening_Brace statement Closing_Brace ")
 
-
-    def p_ScopedVariableDec(self, p):
-        """ScopedVariableDec : scopedSpecifier variableList SEMICOLON"""
-        print("5")
-
+    def p_declaration_idLetter(self, p):
+        """declaration :  void_KW idLetter Opening_Parentheses parameter Closing_Parentheses Opening_Brace statement Closing_Brace
+                    | type idLetter Opening_Parentheses parameter Closing_Parentheses statement
+                    | type  variableList Semicolon"""
+        if len(p)==4:
+            print("declaration : type  variableList Semicolon")
+        elif len(p) == 7:
+            print("declaration : type idLetter Opening_Parentheses parameter Closing_Parentheses statement")
+        else:
+            print("declaration : void_KW idLetter Opening_Parentheses parameter Closing_Parentheses Opening_Brace statement Closing_Brace")
 
     def p_variableList(self, p):
-        """variableList : variableList COMA variableList
+        """variableList : variableList Comma varInitialization
         | varInitialization"""
-        print("6")
-
+        if len(p) == 2:
+            print("variableList : varInitialization")
+        else:
+            print(
+                " variableList : variableList Comma varInitialization")
 
     def p_varInitialization(self, p):
         """varInitialization : varForm
-        | varForm COLON OPENING_PARENTHESES eachExpression CLOSING_PARENTHESES"""
-        print("7")
-
+        | varForm Colon Opening_Parentheses eachExpression Closing_Parentheses"""
+        if len(p) == 2:
+            print("varInitialization : varForm")
+        else:
+            print(
+                " varInitialization : varForm Colon Opening_Parentheses eachExpression Closing_Parentheses")
 
     def p_varForm(self, p):
-        """varForm : LETTER OPENING_BRACKET NUMBER CLOSING_BRACKET
-        | LETTER """
-        print("8")
-
-    def p_scopedSpecifier(self, p):
-        """scopedSpecifier : STATIC_KW type
-        | type"""
-        print("9")
+        """varForm : idLetter Opening_Bracket Num Closing_Bracket
+        | idLetter """
+        if len(p) == 2:
+            print("varForm : idLetter ")
+        else:
+            print(
+                " arForm : idLetter Opening_Bracket Num Closing_Bracket")
 
 
     def p_type(self, p):
-        """type : BOOLEAN_KW
-        | CHARACTER_KW
-        | INTEGER_KW
-        | CHAR_KW
-        | BOOL_KW
-        | INT_KW"""
-        print("10")
+        """type : Boolean_KW
+        | Character_KW
+        | Integer_KW
+        | char_KW
+        | bool_KW
+        | int_KW"""
+        print("type : someTypeKeyWord")
 
     def p_parameter(self, p):
         """parameter : listOfParameters
         | """
-        print("11")
-
+        if(len(p)==2):
+            print("parameter : listOfParameters")
+        else:
+            print("parameter : ")
 
     def p_listOfParameters(self, p):
-        """listOfParameters : listOfParameters SEMICOLON paramTypeList
+        """listOfParameters : listOfParameters Semicolon paramTypeList
         | paramTypeList"""
-        print("12")
-
+        if (len(p) == 2):
+            print("listOfParameters : listOfParameters Semicolon paramTypeList")
+        else:
+            print("listOfParameters : paramTypeList")
 
     def p_paramTypeList(self, p):
         """paramTypeList : type paramList"""
-        print("13")
-
+        print("paramTypeList : type paramList")
 
     def p_paramList(self, p):
-        """paramList :  paramList COMA paramId
+        """paramList :  paramList Comma paramId
         | paramId"""
-        print("14")
-
+        if(len(p)==4):
+            print("paramList :  paramList Comma paramId")
+        else:
+            print("paramList :  paramId")
 
     def p_localDeclarations(self, p):
-        """localDeclarations : ScopedVariableDec localDeclarations
+        """localDeclarations : localDeclarations Static_KW type variableList Semicolon
+        | localDeclarations type variableList Semicolon
         | """
-        print("15")
+        if(len(p)==5):
+            print("localDeclarations :  localDeclarations type variableList Semicolon")
+        elif(len(p)==6):
+            print("localDeclarations : localDeclarations Static_KW type variableList Semicolon")
+        else:
+            print("localDeclarations : ")
 
     def p_paramId(self, p):
-        """paramId : LETTER
-        | LETTER OPENING_BRACKET CLOSING_BRACKET"""
-        print("16")
-
-
-    def p_statement(self, p):
-        """statement : phrase
-        | compoundPhrase
-        | selectPhrase
-        | iterationPhrase
-        | returnPhrase
-        | continue"""
-        print("17")
-
-
-    def p_statement_without_bracket(self, p):
-        """statementWithoutBracket : phrase
-        | selectPhrase
-        | iterationPhrase
-        | returnPhrase
-        | continue"""
-        print("18")
-
-
-    def p_compoundPhrase(self, p):
-        """compoundPhrase : OPENING_BRACE localDeclarations  statementList CLOSING_BRACE"""
-        print("19")
-
+        """paramId : idLetter
+        | idLetter Opening_Bracket Closing_Bracket"""
+        if(len(p)==2):
+            print("paramId : idLetter")
+        else:
+            print("paramId : idLetter Opening_Bracket Closing_Bracket")
 
     def p_statementList(self, p):
-        """statementList : statementList statement
+        """statementList :  statement statementList
         | """
-        print("20")
+        if(len(p)==3):
+            print("statementList :  statement statementList")
+        else:
+            print("statementList :  ")
+
+
+    def p_statement_phrase(self, p):
+        """statement : phrase
+        """
+
+        print("statement : phrase")
+    def p_statement_compoundphrase(self, p):
+        """statement : compoundPhrase
+        """
+        print("statement : compoundPhrase")
+    def p_statement_selectphrase(self, p):
+        """statement : selectPhrase
+        """
+        print("statement : selectPhrase")
+    def p_statement_iterationphrase(self, p):
+        """statement : iterationPhrase
+        """
+        print("statement : iterationPhrase")
+    def p_statement_returnphrase(self, p):
+        """statement : returnPhrase"""
+        print("statement : returnPhrase")
+    def p_statement_continue(self, p):
+        """statement : continue"""
+        print("statement : continue")
+
+    def p_compoundPhrase(self, p):
+        """compoundPhrase : Opening_Brace localDeclarations  statementList Closing_Brace"""
+        print("compoundPhrase : Opening_Brace localDeclarations  statementList Closing_Brace")
 
 
     def p_phrase(self, p):
-        """phrase : allExpression SEMICOLON
-        | SEMICOLON"""
-        print("21")
-
+        """phrase : allExpression Semicolon
+        | Semicolon"""
+        if(len(p)==3):
+            print("phrase : allExpression Semicolon")
+        else:
+            print("phrase : Semicolon")
 
     def p_selectPhrase(self, p):
-        """selectPhrase : IF_KW OPENING_PARENTHESES eachExpression CLOSING_PARENTHESES statementWithoutBracket
-                        | IF_KW OPENING_PARENTHESES eachExpression CLOSING_PARENTHESES statementWithoutBracket OTHER_KW statement
-                        | IF_KW OPENING_PARENTHESES eachExpression CLOSING_PARENTHESES ifBodyWithBracket
-                            """
-        print("22")
+        """selectPhrase : If_KW Opening_Parentheses eachExpression Closing_Parentheses ifBody
+                        | If_KW Opening_Parentheses eachExpression Closing_Parentheses Opening_Brace ifBody ifBody Closing_Brace"""
+        if(len(p)==6):
+            print("selectPhrase : If_KW Opening_Parentheses eachExpression Closing_Parentheses ifBody")
+        else:
+            print("selectPhrase : If_KW Opening_Parentheses eachExpression Closing_Parentheses Opening_Brace ifBody ifBody Closing_Brace")
 
 
     def p_ifBody(self, p):
-        """ifBodyWithBracket : OPENING_BRACE ScopedVariableDec localDeclarations statementList CLOSING_BRACE
-        | OPENING_BRACE statement statement statementList CLOSING_BRACE
-        | OPENING_BRACE statement OTHER_KW statement statement CLOSING_BRACE
-        | OPENING_BRACE statement statement OTHER_KW statement CLOSING_BRACE
-        | OPENING_BRACE statement OTHER_KW statement statement OTHER_KW statement CLOSING_BRACE
+        """ifBody : statement
+        | statement Other_KW statement
         """
-        print("23")
+        if(len(p)==2):
+            print("ifBody : statement")
+        else:
+            print("ifBody : statement Other_KW statement")
 
+
+    def p_ifBody_semicolon(self, p):
+        """ifBody : Semicolon"""
+        print("ifBody : Semicolon")
 
     def p_iterationPhrase(self, p):
-        """iterationPhrase : TILL_KW OPENING_PARENTHESES eachExpression CLOSING_PARENTHESES statement"""
-        print("24")
+        """iterationPhrase : Till_KW Opening_Parentheses eachExpression Closing_Parentheses statement"""
+        print("iterationPhrase : Till_KW Opening_Parentheses eachExpression Closing_Parentheses statement")
 
+    def p_returnPhrase_cs(self, p):
+        """returnPhrase : ComeBack_KW Semicolon"""
+        print("returnPhrase : ComeBack_KW Semicolon")
 
-    def p_returnPhrase(self, p):
-        """returnPhrase : COMEBACK_KW SEMICOLON
-        | GIVEBACK_KW allExpression SEMICOLON
-        | GIVEBACK_KW numOrLetter SEMICOLON"""
-        print("25")
+    def p_returnPhrase_gas(self, p):
+        """returnPhrase : GiveBack_KW allExpression Semicolon"""
+        print("returnPhrase : GiveBack_KW allExpression Semicolon")
 
+    def p_returnPhrase_gns(self, p):
+        """returnPhrase : GiveBack_KW numOrLetter Semicolon"""
+        print("returnPhrase : GiveBack_KW numOrLetter Semicolon")
 
     def p_continue(self, p):
-        """continue : CONTINUE_KW SEMICOLON"""
-        print("26")
+        """continue : Continue_KW Semicolon"""
+        print("continue : Continue_KW Semicolon")
+
+    def p_allExpression_a(self, p):
+        """allExpression : alterable mathOp allExpression"""
+        print("allExpression : alterable mathOp allExpression")
+
+    def p_allExpression_pp(self, p):
+        """allExpression : alterable PP"""
+        print("allExpression : alterable PP")
+
+    def p_allExpression_mm(self, p):
+        """allExpression : alterable MM"""
+        print("allExpression : alterable MM")
+
+    def p_allExpression_e(self, p):
+        """allExpression : eachExpression"""
+        print("allExpression : eachExpression")
+
+    def p_allExpression_ama(self, p):
+        """allExpression : alterable mathOp alterable"""
+        print("allExpression : alterable mathOp alterable")
+
+    def p_mathOp_e(self, p):
+        """mathOp : Equal"""
+        print("mathOp : Equal")
+
+    def p_mathOp_p(self, p):
+        """mathOp : PlusEqual"""
+        print("mathOp : PlusEqual")
+
+    def p_mathOp_mi(self, p):
+        """mathOp : MinusEqual"""
+        print("mathOp : MinusEqual")
+
+    def p_mathOp_t(self, p):
+        """mathOp : TimesEqual"""
+        print("mathOp : TimesEqual")
+
+    def p_mathOp_d(self, p):
+        """mathOp : DivideEqual"""
+        print("mathOp : DivideEqual")
+
+    def p_eachExpression_e(self, p):
+        """eachExpression : eachExpression logicOp eachExpression"""
+        print("eachExpression : eachExpression logicOp eachExpression")
+
+    def p_eachExpression_et(self, p):
+        """eachExpression : eachExpression logicOp Then_KW eachExpression"""
+        print("eachExpression : eachExpression logicOp Then_KW eachExpression")
+
+    def p_eachExpression_l(self, p):
+        """eachExpression : logicOp eachExpression"""
+        print("eachExpression : logicOp eachExpression")
+
+    def p_eachExpression_r(self, p):
+        """eachExpression : relExpression"""
+        print("eachExpression : relExpression")
+
+    def p_eachExpression_ele(self, p):
+        """eachExpression : eachExpression logicOp Else_KW eachExpression"""
+        print("eachExpression : eachExpression logicOp Else_KW eachExpression")
+
+    def p_relExpression_c(self, p):
+        """relExpression : mathEXP compareType mathEXP"""
+        print("relExpression : mathEXP compareType mathEXP")
+
+    def p_relExpression_m(self, p):
+        """relExpression : mathEXP"""
+        print("relExpression : mathEXP")
+
+    def p_compareType_e(self, p):
+        """compareType : equal"""
+        print("compareType : equal")
+
+    def p_compareType_n(self, p):
+        """compareType : nonEqual"""
+        print("compareType : nonEqual")
+
+    def p_equal_l(self, p):
+        """equal : LEqual"""
+        print("equal : LEqual")
+
+    def p_equal_g(self, p):
+        """equal : GEqual"""
+        print("equal : GEqual")
 
 
-    def p_allExpression(self, p):
-        """allExpression : alterable mathOp allExpression
-        | alterable PP_OP
-        | alterable MM_OP
-        | eachExpression"""
-        print("27")
+    def p_equal_e(self, p):
+        """equal : EEqual"""
+        print("equal : EEqual")
 
 
-    def p_mathOp(self, p):
-        """mathOp : EQ_OP
-        | PLE_OP
-        | MIE_OP
-        | MUE_OP
-        | DIE_OP"""
-        print("28")
+    def p_nonEqual_g(self, p):
+        """nonEqual : GreaterOP"""
+        print("nonEqual : GreaterOP")
 
 
-    def p_eachExpression(self, p):
-        """eachExpression : eachExpression logicOp eachExpression
-        | eachExpression logicOp THEN_KW eachExpression
-        | logicOp eachExpression
-        | relExpression
-        | eachExpression logicOp ELSE_KW eachExpression"""
-        print("29")
+    def p_nonEqual_l(self, p):
+        """nonEqual : LessOP"""
+        print("nonEqual : LessOP")
 
 
-    def p_relExpression(self, p):
-        """relExpression : mathEXP compareType mathEXP
-        | mathEXP"""
-        print("30")
-
-#fargh dare
-    def p_mathEXP(self, p):
-        """mathEXP : mathEXP op mathEXP
-        | unaryExpression"""
-        print("31")
+    def p_nonEqual_n(self, p):
+        """nonEqual : NonEqualOP"""
+        print("nonEqual : NonEqualOP")
 
 
-    def p_compareType(self, p):
-        """compareType : equal
-        | nonEqual"""
-        print("32")
+    def p_mathEXP_u(self, p):
+        """mathEXP : unaryExpression"""
+        print("mathEXP : unaryExpression")
 
 
-    def p_equal(self, p):
-        """equal : LE_REL
-        | GE_REL
-        | EQ_REL"""
-        print("33")
+    def p_mathEXP_m(self, p):
+        """mathEXP : mathEXP op mathEXP"""
+        print("mathEXP : mathEXP op mathEXP")
 
 
-    def p_nonEqual(self, p):
-        """nonEqual : GT_REL
-        | LT_REL
-        | NEQ_REL"""
-        print("34")
+    def p_op_p(self, p):
+        """op : Plus"""
+        print("op : Plus")
 
 
-    def p_op(self, p):
-        """op : PL_OP
-        | MI_OP
-        | MU_OP
-        | DI_OP
-        | PE_OP"""
-        print("35")
+    def p_op_m(self, p):
+        """op : Minus"""
+
+        print("op : Minus")
 
 
-    def p_unaryExpression(self, p):
-        """unaryExpression : unaryop unaryExpression
-        | factor"""
-        print("36")
+    def p_op_t(self, p):
+        """op : Times"""
+        print("op : Times")
 
 
-    def p_unaryop(self, p):
-        """unaryop : MI_OP
-        | MU_OP
-        | QU_UOP"""
-        print("37")
+    def p_op_d(self, p):
+        """op : Divide"""
+        print("op : Divide")
 
 
-    def p_factor(self, p):
-        """factor : inalterable
-        | alterable"""
-        print("38")
+    def p_op_mo(self, p):
+        """op : ModeOP"""
+        print("op : ModeOP")
 
 
-    def p_alterable(self, p):
-        """alterable : LETTER
-        | alterable OPENING_BRACKET allExpression CLOSING_BRACKET
-        | alterable LETTER"""
-        print("39")
-
-#TODO dot!
-    def p_inalterable(self, p):
-        """inalterable : OPENING_PARENTHESES allExpression CLOSING_PARENTHESES
-        | constant
-        | LETTER OPENING_PARENTHESES args CLOSING_PARENTHESES"""
-        print("40")
+    def p_unaryExpression_u(self, p):
+        """unaryExpression : unaryop unaryExpression"""
+        print("unaryExpression : unaryop unaryExpression")
 
 
-    def p_args(self, p):
-        """args : arguments
-        | """
-        print("41")
+    def p_unaryExpression_f(self, p):
+        """unaryExpression : factor"""
+        print("unaryExpression : factor")
 
 
-    def p_arguments(self, p):
-        """arguments : arguments COMA allExpression
-        | allExpression"""
-        print("42")
+    def p_unaryop_m(self, p):
+        """unaryop : Minus"""
+        print("unaryop : Minus")
 
 
-    def p_constant(self, p):
-        """constant : CONST_KW
-        | TRUE
-        | FALSE"""
-        print("43")
+    def p_unaryop_t(self, p):
+        """unaryop : Times"""
+        print("unaryop : Times")
 
 
-    def p_logicOp(self, p):
-        """logicOp : AA_LOP
-        | OO_LOP
-        | TIL_LOP
-        | AND_LOP
-        | OR_LOP"""
-        print("44")
+    def p_unaryop_q(self, p):
+        """unaryop : QMark"""
+        print("unaryop : QMark")
 
+
+    def p_factor_i(self, p):
+        """factor : inalterable"""
+        print("factor : inalterable")
+
+    def p_factor_a(self, p):
+        """factor : alterable"""
+        print("factor : alterable")
+
+
+    def p_alterable_n(self, p):
+        """alterable : numOrLetter"""
+        print("alterable : numOrLetter")
+
+
+    def p_alterable_a(self, p):
+        """alterable : alterable Opening_Bracket allExpression Closing_Bracket"""
+        print("alterable : alterable Opening_Bracket allExpression Closing_Bracket")
+
+
+    def p_alterable_ad(self, p):
+        """alterable : alterable Dot numOrLetter"""
+        print("alterable : alterable Dot numOrLetter")
+
+
+    def p_inalterable_o(self, p):
+        """inalterable : Opening_Parentheses allExpression Closing_Parentheses"""
+        print("inalterable : Opening_Parentheses allExpression Closing_Parentheses")
+
+
+    def p_inalterable_c(self, p):
+        """inalterable : constant"""
+        print("inalterable : constant")
+
+
+    def p_inalterable_i(self, p):
+        """inalterable : idLetter Opening_Parentheses args Closing_Parentheses"""
+        print("inalterable : idLetter Opening_Parentheses args Closing_Parentheses")
+
+
+    def p_args_a(self, p):
+        """args : arguments"""
+        print("args : arguments")
+
+
+    def p_args_e(self, p):
+        """args : """
+        print("args : ")
+
+
+    def p_arguments_ar(self, p):
+        """arguments : arguments Comma allExpression"""
+        print("arguments : arguments Comma allExpression")
+
+
+    def p_arguments_al(self, p):
+        """arguments : allExpression"""
+        print("arguments : allExpression")
+
+
+    def p_constant_C(self, p):
+        """constant : Const_KW"""
+        print("constant : Const_KW")
+
+
+    def p_constant_T(self, p):
+        """constant : True_KW"""
+        print("constant : True_KW")
+
+
+    def p_constant_F(self, p):
+        """constant : False_KW"""
+        print("constant : False_KW")
+
+
+    def p_logicOp_DA(self, p):
+        """logicOp : DoubleAnd"""
+        print("logicOp : DoubleAnd")
+
+
+    def p_logicOp_DO(self, p):
+        """logicOp : DoubleOr"""
+        print("logicOp : DoubleOr")
+
+
+    def p_logicOp_T(self, p):
+        """logicOp : Tilda"""
+        print("logicOp : Tilda")
+
+
+    def p_logicOp_A(self, p):
+        """logicOp : And_KW"""
+        print("logicOp : And_KW")
+
+
+    def p_logicOp_O(self, p):
+        """logicOp : Or_KW"""
+        print("logicOp : Or_KW")
 
     def p_error(self, p):
-        if p:
-            print('syntax error in', p.lexpos)
-        else:
-            print('syntax error with nontype obj')
-        #    for i in p:
-        #        print(i)
+        stack_state_str = ' '.join([symbol.type for symbol in parser.symstack][1:])
+
+        print('Syntax error in input! Parser State:{} {} . {}'
+              .format(parser.state,
+                      stack_state_str,
+                      p))
         exit(5)
 
     def build(self, **kwargs):
         self.parser = yacc.yacc(module=self, **kwargs, debug=True)
         return self.parser
 
+
 if __name__ == '__main__':
-    parser = Yacc().build()
+    yacc = Yacc().build()
+    parser = yacc
     while True:
         try:
             s = input('parser> ')
         except EOFError:
             break
-        parser.parse(s)
+        parser.parse(s, debug=False)
+
