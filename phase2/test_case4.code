@@ -1,9 +1,10 @@
-int 1firstFunc()
-{
-int firstArray [5] ;
-static bool secondNum:(5 + a) ;
-firstNum = v.time[50] * 10 ;
-secondNum= firstNum ++ ;
-{static int khar; a = a and b; a = a && b;}
- giveBack secondNum;
+int 1firstFunc() {
+    int firstArray [5];
+    if ( A1 and then A2 ) continue ;
+    other{
+        int B1 ;
+        if (B1<5) till(B1 != 5) B1++;
+        if (B1== A) A2 = false;
+        }
+    giveBack secondNum;
 }

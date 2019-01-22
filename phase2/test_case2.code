@@ -1,9 +1,12 @@
 int 1firstFunc() {
     int firstArray [5];
-    if ( A1 and then A2 ) continue ;
+    A1= firstNum <= secondNum;
+    if ( A1 and then A2 )
+        continue ;
     other{
         int B1 ;
         if (B1<5) till(B1 != 5) B1++;
-        if (B1== A) A2 = false; }
+        if (B1== A) A2 = false;
+        }
     giveBack secondNum;
 }

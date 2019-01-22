@@ -109,8 +109,6 @@ def t_newline( t):
     t.lexer.lineno += t.value.count("\n")
 
 
-# void func(){comeback;}
-
 lexer = lex.lex()
 for i in range(5):
     orig_stdout = sys.stdout
@@ -126,13 +124,3 @@ for i in range(5):
         print(str(tok.type) + "\t\t\t\t\t" + str(tok.value) + "\t\t\t\t\t" + str(tok.lineno) + "\t\t\t\t\t" + str(
             tok.lexpos))
     f.close()
-
-# f = codecs.open('./../test_case1.code', encoding='utf-8')
-# lexer.input(f.read())
-# f.close()
-# print("type \t\t\t\t\t value \t\t\t\t\t line \t\t\t\t\t lexpos ")
-# while True:
-#     tok = lexer.token()
-#     if not tok:
-#         break
-#     print(str(tok.type) + "\t\t\t\t\t" + str(tok.value) + "\t\t\t\t\t" + str(tok.lineno) + "\t\t\t\t\t" + str(tok.lexpos))

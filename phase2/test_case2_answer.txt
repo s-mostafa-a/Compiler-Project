@@ -8,6 +8,27 @@ variableList : varInitialization
 localDeclarations :  localDeclarations type variableList Semicolon
 numOrLetter : idLetter
 alterable : numOrLetter
+mathOp : Equal
+numOrLetter : idLetter
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+equal : LEqual
+compareType : equal
+numOrLetter : idLetter
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+relExpression : mathEXP compareType mathEXP
+eachExpression : relExpression
+allExpression : eachExpression
+allExpression : alterable mathOp allExpression
+phrase : allExpression Semicolon
+statement : phrase
+numOrLetter : idLetter
+alterable : numOrLetter
 factor : alterable
 unaryExpression : factor
 mathEXP : unaryExpression
@@ -111,6 +132,7 @@ numOrLetter : idLetter
 returnPhrase : GiveBack_KW numOrLetter Semicolon
 statement : returnPhrase
 statementList :  
+statementList :  statement statementList
 statementList :  statement statementList
 statementList :  statement statementList
 compoundPhrase : Opening_Brace localDeclarations  statementList Closing_Brace
