@@ -3,7 +3,28 @@ parameter :
 localDeclarations : 
 type : someTypeKeyWord
 varForm : idLetter Opening_Bracket Num Closing_Bracket
-varInitialization : varForm
+numOrLetter : idLetter
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+op : Plus
+numOrLetter : Num
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+op : Times
+numOrLetter : Num
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+mathEXP : mathEXP op mathEXP
+mathEXP : mathEXP op mathEXP
+relExpression : mathEXP
+eachExpression : relExpression
+varInitialization : varForm Colon Opening_Parentheses eachExpression Closing_Parentheses
 variableList : varInitialization
 localDeclarations :  localDeclarations type variableList Semicolon
 numOrLetter : idLetter

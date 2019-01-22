@@ -1,2 +1,2 @@
 type : someTypeKeyWord
-Syntax error in input! Parser State:16 type idLetter . LexToken(PlusEqual,'+=',50,5)
+Syntax error in input! Parser State:16 type idLetter . LexToken(MinusEqual,'-=',47,5)

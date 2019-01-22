@@ -1,6 +1,27 @@
 type : someTypeKeyWord
 varForm : idLetter 
-varInitialization : varForm
+numOrLetter : Num
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+op : Plus
+numOrLetter : Num
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+op : Times
+numOrLetter : idLetter
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+mathEXP : mathEXP op mathEXP
+mathEXP : mathEXP op mathEXP
+relExpression : mathEXP
+eachExpression : relExpression
+varInitialization : varForm Colon Opening_Parentheses eachExpression Closing_Parentheses
 variableList : varInitialization
 declaration : type  variableList Semicolon
 list : declaration 

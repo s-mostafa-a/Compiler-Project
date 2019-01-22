@@ -1,13 +1,8 @@
-int 1firstFunc()
-{
-    int firstArray [5]:(10) ;
-    static bool secondNum:(5 + a) ;
-    firstNum = v.time[50] * 10 ;
-    secondNum = firstNum ++ ;
-    {
-        static int khar;
-        a = a and b;
-        a = a && b;
-    }
+int 1firstFunc() {
+    int firstNum ;
+    int secondNum ;
+    firstNum= 5 * 10 ;
+    secondNum= firstNum ++ ;
+    //secondNum will be 51
     giveBack secondNum;
 }

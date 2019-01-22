@@ -1,12 +1,15 @@
-int 1firstFunc() {
-    int firstArray [5];
+void secondFunc (bool B ; int A ) {
+    int firstArray [5] ;
+    bool A1 ;
+    bool A2 ;
     A1= firstNum <= secondNum;
-    if ( A1 and then A2 )
-        continue ;
-    other{
+    A2 = B ;
+    if ( A1 and then A2 ) continue ;
+    other
+        {
         int B1 ;
         if (B1<5) till(B1 != 5) B1++;
         if (B1== A) A2 = false;
         }
-    giveBack secondNum;
+    comeBack;
 }

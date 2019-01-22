@@ -1,8 +1,27 @@
 type : someTypeKeyWord
-parameter : 
+paramId : idLetter
+paramList :  paramId
+paramTypeList : type paramList
+listOfParameters : listOfParameters Semicolon paramTypeList
+type : someTypeKeyWord
+paramId : idLetter
+paramList :  paramId
+paramTypeList : type paramList
+listOfParameters : paramTypeList
+parameter : listOfParameters
 localDeclarations : 
 type : someTypeKeyWord
 varForm : idLetter Opening_Bracket Num Closing_Bracket
+varInitialization : varForm
+variableList : varInitialization
+localDeclarations :  localDeclarations type variableList Semicolon
+type : someTypeKeyWord
+varForm : idLetter 
+varInitialization : varForm
+variableList : varInitialization
+localDeclarations :  localDeclarations type variableList Semicolon
+type : someTypeKeyWord
+varForm : idLetter 
 varInitialization : varForm
 variableList : varInitialization
 localDeclarations :  localDeclarations type variableList Semicolon
@@ -25,6 +44,14 @@ relExpression : mathEXP compareType mathEXP
 eachExpression : relExpression
 allExpression : eachExpression
 allExpression : alterable mathOp allExpression
+phrase : allExpression Semicolon
+statement : phrase
+numOrLetter : idLetter
+alterable : numOrLetter
+mathOp : Equal
+numOrLetter : idLetter
+alterable : numOrLetter
+allExpression : alterable mathOp alterable
 phrase : allExpression Semicolon
 statement : phrase
 numOrLetter : idLetter
@@ -128,15 +155,15 @@ statement : compoundPhrase
 ifBody : statement Other_KW statement
 selectPhrase : If_KW Opening_Parentheses eachExpression Closing_Parentheses ifBody
 statement : selectPhrase
-numOrLetter : idLetter
-returnPhrase : GiveBack_KW numOrLetter Semicolon
+returnPhrase : ComeBack_KW Semicolon
 statement : returnPhrase
 statementList :  
 statementList :  statement statementList
 statementList :  statement statementList
 statementList :  statement statementList
+statementList :  statement statementList
 compoundPhrase : Opening_Brace localDeclarations  statementList Closing_Brace
 statement : compoundPhrase
-declaration : type idNum Opening_Parentheses parameter Closing_Parentheses statement
+declaration : type idLetter Opening_Parentheses parameter Closing_Parentheses statement
 list : declaration 
 program : list

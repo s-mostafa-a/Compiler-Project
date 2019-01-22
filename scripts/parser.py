@@ -41,7 +41,7 @@ class Yacc:
             print("list : declaration ")
 
     def p_declaration_idNum(self, p):
-        """declaration : void_KW idNum Opening_Parentheses parameter Closing_Parentheses Opening_Brace statement Closing_Brace
+        """declaration : void_KW idNum Opening_Parentheses parameter Closing_Parentheses statement
                     | type idNum Opening_Parentheses parameter Closing_Parentheses statement
                     """
         if len(p)==7:
@@ -50,10 +50,10 @@ class Yacc:
             print("declaration : void_KW idNum Opening_Parentheses parameter Closing_Parentheses Opening_Brace statement Closing_Brace ")
 
     def p_declaration_idLetter(self, p):
-        """declaration :  void_KW idLetter Opening_Parentheses parameter Closing_Parentheses Opening_Brace statement Closing_Brace
+        """declaration : void_KW idLetter Opening_Parentheses parameter Closing_Parentheses  statement
                     | type idLetter Opening_Parentheses parameter Closing_Parentheses statement
                     | type  variableList Semicolon"""
-        if len(p)==4:
+        if len(p) == 4:
             print("declaration : type  variableList Semicolon")
         elif len(p) == 7:
             print("declaration : type idLetter Opening_Parentheses parameter Closing_Parentheses statement")
