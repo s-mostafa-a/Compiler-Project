@@ -67,7 +67,7 @@ class Yacc:
             print("variableList : varInitialization")
         else:
             print(
-                " variableList : variableList Comma varInitialization")
+                "variableList : variableList Comma varInitialization")
 
     def p_varInitialization(self, p):
         """varInitialization : varForm
@@ -76,7 +76,7 @@ class Yacc:
             print("varInitialization : varForm")
         else:
             print(
-                " varInitialization : varForm Colon Opening_Parentheses eachExpression Closing_Parentheses")
+                "varInitialization : varForm Colon Opening_Parentheses eachExpression Closing_Parentheses")
 
     def p_varForm(self, p):
         """varForm : idLetter Opening_Bracket Num Closing_Bracket
@@ -85,7 +85,7 @@ class Yacc:
             print("varForm : idLetter ")
         else:
             print(
-                " arForm : idLetter Opening_Bracket Num Closing_Bracket")
+                "varForm : idLetter Opening_Bracket Num Closing_Bracket")
 
 
     def p_type(self, p):
@@ -514,34 +514,11 @@ class Yacc:
 if __name__ == '__main__':
     yacc = Yacc().build()
     parser = yacc
-    orig_stdout = sys.stdout
-    out = open('./../test_case1_answer.txt', 'w')
-    sys.stdout = out
-    f = codecs.open('./../test_case1.code', encoding='utf-8')
-    parser.parse(f.read())
-    f.close()
-    orig_stdout = sys.stdout
-    out = open('./../test_case2_answer.txt', 'w')
-    sys.stdout = out
-    f = codecs.open('./../test_case2.code', encoding='utf-8')
-    parser.parse(f.read())
-    f.close()
-    orig_stdout = sys.stdout
-    out = open('./../test_case3_answer.txt', 'w')
-    sys.stdout = out
-    f = codecs.open('./../test_case3.code', encoding='utf-8')
-    parser.parse(f.read())
-    f.close()
-    orig_stdout = sys.stdout
-    out = open('./../test_case4_answer.txt', 'w')
-    sys.stdout = out
-    f = codecs.open('./../test_case4.code', encoding='utf-8')
-    parser.parse(f.read())
-    f.close()
-    orig_stdout = sys.stdout
-    out = open('./../test_case5_answer.txt', 'w')
-    sys.stdout = out
-    f = codecs.open('./../test_case5.code', encoding='utf-8')
-    parser.parse(f.read())
-    f.close()
+    for i in range(5):
+        orig_stdout = sys.stdout
+        out = open('./../phase2/test_case{0}_answer.txt'.format(i+1), 'w')
+        sys.stdout = out
+        f = codecs.open('./../phase2/test_case{0}.code'.format(i+1), encoding='utf-8')
+        parser.parse(f.read())
+        f.close()
 

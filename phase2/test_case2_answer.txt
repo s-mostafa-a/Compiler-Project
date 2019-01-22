@@ -2,79 +2,10 @@ type : someTypeKeyWord
 parameter : 
 localDeclarations : 
 type : someTypeKeyWord
- arForm : idLetter Opening_Bracket Num Closing_Bracket
+varForm : idLetter Opening_Bracket Num Closing_Bracket
 varInitialization : varForm
 variableList : varInitialization
 localDeclarations :  localDeclarations type variableList Semicolon
-type : someTypeKeyWord
-varForm : idLetter 
-numOrLetter : Num
-alterable : numOrLetter
-factor : alterable
-unaryExpression : factor
-mathEXP : unaryExpression
-op : Plus
-numOrLetter : idLetter
-alterable : numOrLetter
-factor : alterable
-unaryExpression : factor
-mathEXP : unaryExpression
-mathEXP : mathEXP op mathEXP
-relExpression : mathEXP
-eachExpression : relExpression
- varInitialization : varForm Colon Opening_Parentheses eachExpression Closing_Parentheses
-variableList : varInitialization
-localDeclarations : localDeclarations Static_KW type variableList Semicolon
-numOrLetter : idLetter
-alterable : numOrLetter
-mathOp : Equal
-numOrLetter : idLetter
-alterable : numOrLetter
-numOrLetter : idLetter
-alterable : alterable Dot numOrLetter
-numOrLetter : Num
-alterable : numOrLetter
-factor : alterable
-unaryExpression : factor
-mathEXP : unaryExpression
-relExpression : mathEXP
-eachExpression : relExpression
-allExpression : eachExpression
-alterable : alterable Opening_Bracket allExpression Closing_Bracket
-factor : alterable
-unaryExpression : factor
-mathEXP : unaryExpression
-op : Times
-numOrLetter : Num
-alterable : numOrLetter
-factor : alterable
-unaryExpression : factor
-mathEXP : unaryExpression
-mathEXP : mathEXP op mathEXP
-relExpression : mathEXP
-eachExpression : relExpression
-allExpression : eachExpression
-allExpression : alterable mathOp allExpression
-phrase : allExpression Semicolon
-statement : phrase
-numOrLetter : idLetter
-alterable : numOrLetter
-mathOp : Equal
-numOrLetter : idLetter
-alterable : numOrLetter
-allExpression : alterable PP
-allExpression : alterable mathOp allExpression
-phrase : allExpression Semicolon
-statement : phrase
-localDeclarations : 
-type : someTypeKeyWord
-varForm : idLetter 
-varInitialization : varForm
-variableList : varInitialization
-localDeclarations : localDeclarations Static_KW type variableList Semicolon
-numOrLetter : idLetter
-alterable : numOrLetter
-mathOp : Equal
 numOrLetter : idLetter
 alterable : numOrLetter
 factor : alterable
@@ -90,45 +21,96 @@ unaryExpression : factor
 mathEXP : unaryExpression
 relExpression : mathEXP
 eachExpression : relExpression
-eachExpression : eachExpression logicOp eachExpression
-allExpression : eachExpression
-allExpression : alterable mathOp allExpression
+eachExpression : eachExpression logicOp Then_KW eachExpression
+continue : Continue_KW Semicolon
+statement : continue
+localDeclarations : 
+type : someTypeKeyWord
+varForm : idLetter 
+varInitialization : varForm
+variableList : varInitialization
+localDeclarations :  localDeclarations type variableList Semicolon
+numOrLetter : idLetter
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+nonEqual : LessOP
+compareType : nonEqual
+numOrLetter : Num
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+relExpression : mathEXP compareType mathEXP
+eachExpression : relExpression
+numOrLetter : idLetter
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+nonEqual : NonEqualOP
+compareType : nonEqual
+numOrLetter : Num
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+relExpression : mathEXP compareType mathEXP
+eachExpression : relExpression
+numOrLetter : idLetter
+alterable : numOrLetter
+allExpression : alterable PP
 phrase : allExpression Semicolon
 statement : phrase
+iterationPhrase : Till_KW Opening_Parentheses eachExpression Closing_Parentheses statement
+statement : iterationPhrase
+ifBody : statement
+selectPhrase : If_KW Opening_Parentheses eachExpression Closing_Parentheses ifBody
+statement : selectPhrase
+numOrLetter : idLetter
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+equal : EEqual
+compareType : equal
+numOrLetter : idLetter
+alterable : numOrLetter
+factor : alterable
+unaryExpression : factor
+mathEXP : unaryExpression
+relExpression : mathEXP compareType mathEXP
+eachExpression : relExpression
 numOrLetter : idLetter
 alterable : numOrLetter
 mathOp : Equal
-numOrLetter : idLetter
-alterable : numOrLetter
-factor : alterable
+constant : False_KW
+inalterable : constant
+factor : inalterable
 unaryExpression : factor
 mathEXP : unaryExpression
 relExpression : mathEXP
 eachExpression : relExpression
-logicOp : DoubleAnd
-numOrLetter : idLetter
-alterable : numOrLetter
-factor : alterable
-unaryExpression : factor
-mathEXP : unaryExpression
-relExpression : mathEXP
-eachExpression : relExpression
-eachExpression : eachExpression logicOp eachExpression
 allExpression : eachExpression
 allExpression : alterable mathOp allExpression
 phrase : allExpression Semicolon
 statement : phrase
+ifBody : statement
+selectPhrase : If_KW Opening_Parentheses eachExpression Closing_Parentheses ifBody
+statement : selectPhrase
 statementList :  
 statementList :  statement statementList
 statementList :  statement statementList
 compoundPhrase : Opening_Brace localDeclarations  statementList Closing_Brace
 statement : compoundPhrase
+ifBody : statement Other_KW statement
+selectPhrase : If_KW Opening_Parentheses eachExpression Closing_Parentheses ifBody
+statement : selectPhrase
 numOrLetter : idLetter
 returnPhrase : GiveBack_KW numOrLetter Semicolon
 statement : returnPhrase
 statementList :  
-statementList :  statement statementList
-statementList :  statement statementList
 statementList :  statement statementList
 statementList :  statement statementList
 compoundPhrase : Opening_Brace localDeclarations  statementList Closing_Brace

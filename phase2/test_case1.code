@@ -1,6 +1,6 @@
 int 1firstFunc()
 {
-int firstArray [5] ;
+int firstArray [5]:(10) ;
 static bool secondNum:(5 + a) ;
 firstNum = v.time[50] * 10 ;
 secondNum= firstNum ++ ;

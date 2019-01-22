@@ -1,7 +1,7 @@
 import codecs
 
 import ply.lex as lex
-
+import sys
 
 sTable = []
 
@@ -111,9 +111,22 @@ def t_newline( t):
 
 # void func(){comeback;}
 
-
-
 lexer = lex.lex()
+for i in range(5):
+    orig_stdout = sys.stdout
+    out = open('./../phase1/test_case{0}_answer.txt'.format(i+1), 'w')
+    sys.stdout = out
+    f = codecs.open('./../phase1/test_case{0}.code'.format(i+1), encoding='utf-8')
+    lexer.input(f.read())
+    print("type \t\t\t\t\t value \t\t\t\t\t line \t\t\t\t\t lexpos ")
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        print(str(tok.type) + "\t\t\t\t\t" + str(tok.value) + "\t\t\t\t\t" + str(tok.lineno) + "\t\t\t\t\t" + str(
+            tok.lexpos))
+    f.close()
+
 # f = codecs.open('./../test_case1.code', encoding='utf-8')
 # lexer.input(f.read())
 # f.close()

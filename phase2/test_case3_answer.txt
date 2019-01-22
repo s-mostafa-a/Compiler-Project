@@ -2,7 +2,7 @@ type : someTypeKeyWord
 parameter : 
 localDeclarations : 
 type : someTypeKeyWord
- arForm : idLetter Opening_Bracket Num Closing_Bracket
+varForm : idLetter Opening_Bracket Num Closing_Bracket
 varInitialization : varForm
 variableList : varInitialization
 localDeclarations :  localDeclarations type variableList Semicolon
@@ -22,7 +22,7 @@ mathEXP : unaryExpression
 mathEXP : mathEXP op mathEXP
 relExpression : mathEXP
 eachExpression : relExpression
- varInitialization : varForm Colon Opening_Parentheses eachExpression Closing_Parentheses
+varInitialization : varForm Colon Opening_Parentheses eachExpression Closing_Parentheses
 variableList : varInitialization
 localDeclarations : localDeclarations Static_KW type variableList Semicolon
 numOrLetter : idLetter
