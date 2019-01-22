@@ -1,3 +1,6 @@
+import codecs
+import sys
+
 from ply import yacc
 from scripts import lexer
 from ply.yacc import yaccdebug
@@ -511,10 +514,34 @@ class Yacc:
 if __name__ == '__main__':
     yacc = Yacc().build()
     parser = yacc
-    while True:
-        try:
-            s = input('parser> ')
-        except EOFError:
-            break
-        parser.parse(s, debug=False)
+    orig_stdout = sys.stdout
+    out = open('./../test_case1_answer.txt', 'w')
+    sys.stdout = out
+    f = codecs.open('./../test_case1.code', encoding='utf-8')
+    parser.parse(f.read())
+    f.close()
+    orig_stdout = sys.stdout
+    out = open('./../test_case2_answer.txt', 'w')
+    sys.stdout = out
+    f = codecs.open('./../test_case2.code', encoding='utf-8')
+    parser.parse(f.read())
+    f.close()
+    orig_stdout = sys.stdout
+    out = open('./../test_case3_answer.txt', 'w')
+    sys.stdout = out
+    f = codecs.open('./../test_case3.code', encoding='utf-8')
+    parser.parse(f.read())
+    f.close()
+    orig_stdout = sys.stdout
+    out = open('./../test_case4_answer.txt', 'w')
+    sys.stdout = out
+    f = codecs.open('./../test_case4.code', encoding='utf-8')
+    parser.parse(f.read())
+    f.close()
+    orig_stdout = sys.stdout
+    out = open('./../test_case5_answer.txt', 'w')
+    sys.stdout = out
+    f = codecs.open('./../test_case5.code', encoding='utf-8')
+    parser.parse(f.read())
+    f.close()
 

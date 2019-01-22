@@ -114,12 +114,12 @@ def t_newline( t):
 
 
 lexer = lex.lex()
-f = codecs.open('./../test.code', encoding='utf-8')
-lexer.input(f.read())
-f.close()
-print("type \t\t\t\t\t value \t\t\t\t\t line \t\t\t\t\t lexpos ")
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(str(tok.type) + "\t\t\t\t\t" + str(tok.value) + "\t\t\t\t\t" + str(tok.lineno) + "\t\t\t\t\t" + str(tok.lexpos))
+# f = codecs.open('./../test_case1.code', encoding='utf-8')
+# lexer.input(f.read())
+# f.close()
+# print("type \t\t\t\t\t value \t\t\t\t\t line \t\t\t\t\t lexpos ")
+# while True:
+#     tok = lexer.token()
+#     if not tok:
+#         break
+#     print(str(tok.type) + "\t\t\t\t\t" + str(tok.value) + "\t\t\t\t\t" + str(tok.lineno) + "\t\t\t\t\t" + str(tok.lexpos))
